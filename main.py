@@ -1,4 +1,6 @@
-from ipaddress import ip_address
+from ast import For
+import platform
+import socket
 import requests
 from pyfiglet import Figlet
 from colorama import Fore, init
@@ -20,10 +22,10 @@ import smtplib
 from email.message import EmailMessage
 from datetime import datetime
 import getpass
-import geocoder as geo
+from playsound import playsound
 
 
-
+os.chdir(sys.path[0]) 
 root = tk.Tk()
 root.withdraw()
 os.system("cls")
@@ -32,7 +34,7 @@ init()
 
 class Weather():
     def __init__(self):
-        os.chdir(sys.path[0]) 
+        
         options = Options()
         options.page_load_strategy = 'none'
         self.browser = webdriver.Firefox(options=options)
@@ -92,7 +94,7 @@ def start():
 
 
 def choose():
-    a = input(Fore.RED + "-> " + Fore.WHITE + "Enter the number of the program you want to run | 0 for exit: ")
+    a = input("\n" + Fore.RED + ">> " + Fore.WHITE + "Enter the number of the program you want to run | 0 for exit: ")
     try:
         a = int(a)
         if not 0 <= a < 28:
@@ -105,7 +107,7 @@ def choose():
 
 def screen_shot():
     f = Figlet(font='standard')
-    print(Fore.RED  + f.renderText('Screenshot'))
+    print(Fore.CYAN  + f.renderText('Screenshot'))
     path = input(Fore.WHITE + "Enter the image path and file name: ")
     screen = screenshot(path)
     return screen
@@ -113,7 +115,7 @@ def screen_shot():
 
 def weather():
     f = Figlet(font='standard')
-    print(Fore.RED  + f.renderText('Weather'))
+    print(Fore.CYAN  + f.renderText('Weather'))
     city = input(Fore.WHITE + "Enter the name of the city: ")
 
     bot = Weather()
@@ -133,7 +135,7 @@ def weather():
 
 def show_calendar():
     f = Figlet(font='standard')
-    print(Fore.RED  + f.renderText('Calendar') + Fore.WHITE)
+    print(Fore.CYAN  + f.renderText('Calendar') + Fore.WHITE)
     month = datetime.now().month
     year = datetime.now().year
     print(calendar.month(year, month))
@@ -141,7 +143,7 @@ def show_calendar():
 
 def coins():
     f = Figlet(font='standard')
-    print(Fore.RED  + f.renderText('Coins') + Fore.WHITE)
+    print(Fore.CYAN  + f.renderText('Coins') + Fore.WHITE)
     coin = input("Enter your coin name: ")
     url = f"https://api.coincap.io/v2/assets/{coin}"
     data = requests.get(url).json()["data"]
@@ -152,7 +154,7 @@ def coins():
 
 def record():
     f = Figlet(font='standard')
-    print(Fore.RED  + f.renderText('Reccord screen') + Fore.WHITE)
+    print(Fore.CYAN  + f.renderText('Reccord screen') + Fore.WHITE)
     path = input("Enter the path: ")
     print(Fore.CYAN + "Recording started. stop with Enter")
     count = 0
@@ -181,7 +183,7 @@ def record():
 
 def send_whatsapp_message():
     f = Figlet(font='standard')
-    print(Fore.RED  + f.renderText('Whatsapp message') + Fore.WHITE)
+    print(Fore.CYAN  + f.renderText('Whatsapp message') + Fore.WHITE)
     h, m = [int(i) for i in input("Enter the time to send the message(e.g 22:04): ").split(":")]
     phone_number = input("Enter the recipient's phone number(e.g +98xxxxxxxxx): ")
     message = input("Enter the message: ")
@@ -191,7 +193,7 @@ def send_whatsapp_message():
 
 def mail():
     f = Figlet(font='standard')
-    print(Fore.RED  + f.renderText('Send email') + Fore.WHITE)
+    print(Fore.CYAN  + f.renderText('Send email') + Fore.WHITE)
 
     msg = EmailMessage()
 
@@ -208,19 +210,41 @@ def mail():
 
 def calculator():
     f = Figlet(font='standard')
-    print(Fore.RED  + f.renderText('Calc') + Fore.WHITE)
+    print(Fore.CYAN  + f.renderText('Calc') + Fore.WHITE)
     a = input("Enter the math expression: ")
-    print(eval(a))
+    print(Fore.CYAN + "Answer: " + Fore.WHITE + str(eval(a)))
 
 
 
 def ip():
     f = Figlet(font='standard')
-    print(Fore.RED  + f.renderText('Ip') + Fore.WHITE)
-    ip_address = geo.ip("me")
-    
-    print(Fore.WHITE + "Your ip: " + Fore.RED + str(ip_address))
+    print(Fore.CYAN  + f.renderText('Ip') + Fore.WHITE)
 
+    os_name = platform.system()
+    ip_ = socket.gethostbyname(socket.gethostname())    
+    print(Fore.WHITE + "Your ip: " + Fore.CYAN + str(ip_))
+    print(Fore.WHITE + "Your OS name: " + Fore.CYAN + str(os_name))
+
+
+def alarm():
+    f = Figlet(font='standard')
+    print(Fore.CYAN  + f.renderText('Alarm') + Fore.WHITE)
+    h, m = [int(i) for i in input("Enter the alarm time: ").split(":")]
+    while True:
+        now_m = datetime.now().minute
+        now_h = datetime.now().hour
+        if now_m == m and now_h == h:
+            os.system('Alarm05.wav')
+            break
+        sleep(5)
+
+
+def clock():
+    f = Figlet(font='standard')
+    print(Fore.WHITE  + f.renderText(f'{datetime.now().hour} : {datetime.now().minute}') + Fore.WHITE)
+    print(Fore.WHITE + datetime.now().strftime("%d/%m/%Y") + "\t" + Fore.CYAN + datetime.today().strftime('%A') + Fore.WHITE)
+
+    
 
 start()
 while True:
@@ -247,9 +271,9 @@ while True:
     elif selected == 9:
         ip()
     elif selected == 10:
-        pass
+        alarm()
     elif selected == 11:
-        pass
+        clock()
     elif selected == 12:
         pass
     elif selected == 13:
