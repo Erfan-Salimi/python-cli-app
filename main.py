@@ -1,40 +1,21 @@
-from ast import For
-import platform
-import socket
-import requests
 from pyfiglet import Figlet
+import requests
 from colorama import Fore, init
-import tkinter as tk
-from pyautogui import screenshot
 import os, sys
 from time import sleep
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.firefox.options import Options
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-import calendar
-import msvcrt
-import numpy as np
-import cv2
-import pywhatkit
-import smtplib
-from email.message import EmailMessage
 from datetime import datetime
-import getpass
-from playsound import playsound
 
 
 os.chdir(sys.path[0]) 
-root = tk.Tk()
-root.withdraw()
 os.system("cls")
 init()
 
 
 class Weather():
     def __init__(self):
-        
+        from selenium.webdriver.firefox.options import Options
+        from selenium import webdriver
+
         options = Options()
         options.page_load_strategy = 'none'
         self.browser = webdriver.Firefox(options=options)
@@ -43,6 +24,10 @@ class Weather():
 
 
     def get_weather(self, city):
+        from selenium.webdriver.common.by import By
+        from selenium.webdriver.support.ui import WebDriverWait
+        from selenium.webdriver.support import expected_conditions as EC
+
         wait = WebDriverWait(self.browser, 5)
         self.browser.get("https://www.google.com/search?q=weather+" + city)
         wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, '#wob_dc')))
@@ -64,6 +49,8 @@ class Weather():
 
 
     def air_quality(self, city):
+        from selenium.webdriver.common.by import By
+
         self.browser.get("https://www.google.com/search?q=google+air+quality+" + city)
         sleep(2)
         self.browser.find_element(by=By.CSS_SELECTOR, value="div.g:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > a:nth-child(1) > h3:nth-child(2)").click()
@@ -106,6 +93,8 @@ def choose():
 
 
 def screen_shot():
+    from pyautogui import screenshot
+
     f = Figlet(font='standard')
     print(Fore.CYAN  + f.renderText('Screenshot'))
     path = input(Fore.WHITE + "Enter the image path and file name: ")
@@ -134,6 +123,8 @@ def weather():
 
 
 def show_calendar():
+    import calendar
+
     f = Figlet(font='standard')
     print(Fore.CYAN  + f.renderText('Calendar') + Fore.WHITE)
     month = datetime.now().month
@@ -153,6 +144,11 @@ def coins():
 
 
 def record():
+    import msvcrt
+    from pyautogui import screenshot
+    import numpy as np
+    import cv2
+
     f = Figlet(font='standard')
     print(Fore.CYAN  + f.renderText('Reccord screen') + Fore.WHITE)
     path = input("Enter the path: ")
@@ -182,6 +178,8 @@ def record():
 
 
 def send_whatsapp_message():
+    import pywhatkit
+
     f = Figlet(font='standard')
     print(Fore.CYAN  + f.renderText('Whatsapp message') + Fore.WHITE)
     h, m = [int(i) for i in input("Enter the time to send the message(e.g 22:04): ").split(":")]
@@ -192,6 +190,10 @@ def send_whatsapp_message():
 
 
 def mail():
+    import getpass
+    import smtplib
+    from email.message import EmailMessage
+
     f = Figlet(font='standard')
     print(Fore.CYAN  + f.renderText('Send email') + Fore.WHITE)
 
@@ -217,6 +219,9 @@ def calculator():
 
 
 def ip():
+    import platform
+    import socket
+
     f = Figlet(font='standard')
     print(Fore.CYAN  + f.renderText('Ip') + Fore.WHITE)
 
@@ -244,7 +249,20 @@ def clock():
     print(Fore.WHITE  + f.renderText(f'{datetime.now().hour} : {datetime.now().minute}') + Fore.WHITE)
     print(Fore.WHITE + datetime.now().strftime("%d/%m/%Y") + "\t" + Fore.CYAN + datetime.today().strftime('%A') + Fore.WHITE)
 
-    
+
+def covid():
+    from covid import Covid
+
+    f = Figlet(font='standard')
+    print(Fore.CYAN  + f.renderText('Covid 19') + Fore.WHITE)
+
+    covid = Covid()
+    country = input(Fore.WHITE + 'Enter your country: ')
+    data = covid.get_status_by_country_name(country)
+    print(Fore.RED + "Deaths: " + str(data['deaths']) + Fore.BLUE + "\t Confirmed: " + str(data['confirmed']))
+
+
+
 
 start()
 while True:
@@ -275,7 +293,7 @@ while True:
     elif selected == 11:
         clock()
     elif selected == 12:
-        pass
+        covid()
     elif selected == 13:
         pass
     elif selected == 14:
@@ -306,5 +324,3 @@ while True:
         pass
     elif selected == 27:
         pass
-
-    sleep(1)
