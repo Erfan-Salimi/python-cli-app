@@ -1,9 +1,11 @@
-from pyfiglet import Figlet
-import requests
-from colorama import Fore, init
+from calendar import calendar
+from code import interact
+from lib2to3.pytree import convert
 import os, sys
+from random import random
 from time import sleep
-from datetime import datetime
+from pyfiglet import Figlet
+from colorama import Fore, init
 
 
 os.chdir(sys.path[0]) 
@@ -68,15 +70,14 @@ def start():
     f = Figlet(font='doom')
     print(Fore.GREEN + f.renderText('python apps'))
 
-    print("%-33s %-33s %-33s" % (f'{Fore.GREEN}1. {Fore.WHITE}Weather', f'{Fore.GREEN}2. {Fore.WHITE}Calender', f'{Fore.GREEN}3. {Fore.WHITE}Coins'))
-    print("%-33s %-33s %-33s" % (f'{Fore.GREEN}4. {Fore.WHITE}Screenshot', f'{Fore.GREEN}5. {Fore.WHITE}Screen recorder', f'{Fore.GREEN}6. {Fore.WHITE}Whatsapp message'))
-    print("%-33s %-33s %-33s" % (f'{Fore.GREEN}7. {Fore.WHITE}Email', f'{Fore.GREEN}8. {Fore.WHITE}Calculator', f'{Fore.GREEN}9. {Fore.WHITE}Ip address'))
-    print("%-33s %-33s %-33s" % (f'{Fore.GREEN}10. {Fore.WHITE}Alarm', f'{Fore.GREEN}11. {Fore.WHITE}Clock', f'{Fore.GREEN}12. {Fore.WHITE}Corona statistics'))
-    print("%-33s %-33s %-33s" % (f'{Fore.GREEN}13. {Fore.WHITE}Base converter', f'{Fore.GREEN}14. {Fore.WHITE}Text to morse code', f'{Fore.GREEN}15. {Fore.WHITE}Convert images to pdf'))
-    print("%-33s %-33s %-33s" % (f'{Fore.GREEN}16. {Fore.WHITE}Random number', f'{Fore.GREEN}17. {Fore.WHITE}Text to speech', f'{Fore.GREEN}18. {Fore.WHITE}Internet connection'))
-    print("%-33s %-33s %-33s" % (f'{Fore.GREEN}19. {Fore.WHITE}Hangman', f'{Fore.GREEN}20. {Fore.WHITE}Notes', f'{Fore.GREEN}21. {Fore.WHITE}Convert to zip file'))
-    print("%-33s %-33s %-33s" % (f'{Fore.GREEN}22. {Fore.WHITE}Calculate age', f'{Fore.GREEN}23. {Fore.WHITE}Password generator', f'{Fore.GREEN}24. {Fore.WHITE}Tic Tac Toe'))
-    print("%-33s %-33s %-33s" % (f'{Fore.GREEN}25. {Fore.WHITE}BMI', f'{Fore.GREEN}26. {Fore.WHITE}Image to ascii', f'{Fore.GREEN}27. {Fore.WHITE}Read text'))
+    print("%-33s %-33s %-33s" % (f'{Fore.GREEN}1. {Fore.WHITE}Clock', f'{Fore.GREEN}2. {Fore.WHITE}Calender', f'{Fore.GREEN}3. {Fore.WHITE}Alarm'))
+    print("%-33s %-33s %-33s" % (f'{Fore.GREEN}4. {Fore.WHITE}Weather', f'{Fore.GREEN}5. {Fore.WHITE}Coins', f'{Fore.GREEN}6. {Fore.WHITE}Corona statistics'))
+    print("%-33s %-33s %-33s" % (f'{Fore.GREEN}7. {Fore.WHITE}Base converter', f'{Fore.GREEN}8. {Fore.WHITE}Calculator', f'{Fore.GREEN}9. {Fore.WHITE}Random number'))
+    print("%-33s %-33s %-33s" % (f'{Fore.GREEN}10. {Fore.WHITE}Images to pdf', f'{Fore.GREEN}11. {Fore.WHITE}Image to ascii', f'{Fore.GREEN}12. {Fore.WHITE}Convert to zip'))
+    print("%-33s %-33s %-33s" % (f'{Fore.GREEN}13. {Fore.WHITE}Ip address', f'{Fore.GREEN}14. {Fore.WHITE}System info', f'{Fore.GREEN}15. {Fore.WHITE}Internet connection'))
+    print("%-33s %-33s %-33s" % (f'{Fore.GREEN}16. {Fore.WHITE}Notepad', f'{Fore.GREEN}17. {Fore.WHITE}TODO', f'{Fore.GREEN}18. {Fore.WHITE}Password generator'))
+    print("%-33s %-33s" % (f'{Fore.GREEN}19. {Fore.WHITE}Email', f'{Fore.GREEN}20. {Fore.WHITE}Whatsapp message'))
+    print("%-33s %-33s" % (f'{Fore.GREEN}21. {Fore.WHITE}Hangman', f'{Fore.GREEN}22. {Fore.WHITE}Tic Tac Toe'))
     print()
 
 
@@ -123,6 +124,7 @@ def weather():
 
 
 def show_calendar():
+    from datetime import datetime
     import calendar
 
     f = Figlet(font='standard')
@@ -133,6 +135,8 @@ def show_calendar():
 
 
 def coins():
+    import requests
+
     f = Figlet(font='standard')
     print(Fore.CYAN  + f.renderText('Coins') + Fore.WHITE)
     coin = input("Enter your coin name: ")
@@ -219,21 +223,21 @@ def calculator():
 
 
 def ip():
-    import platform
     import socket
 
     f = Figlet(font='standard')
     print(Fore.CYAN  + f.renderText('Ip') + Fore.WHITE)
 
-    os_name = platform.system()
     ip_ = socket.gethostbyname(socket.gethostname())    
     print(Fore.WHITE + "Your ip: " + Fore.CYAN + str(ip_))
-    print(Fore.WHITE + "Your OS name: " + Fore.CYAN + str(os_name))
 
 
 def alarm():
+    from datetime import datetime
+
     f = Figlet(font='standard')
     print(Fore.CYAN  + f.renderText('Alarm') + Fore.WHITE)
+
     h, m = [int(i) for i in input("Enter the alarm time: ").split(":")]
     while True:
         now_m = datetime.now().minute
@@ -245,6 +249,8 @@ def alarm():
 
 
 def clock():
+    from datetime import datetime
+
     f = Figlet(font='standard')
     print(Fore.WHITE  + f.renderText(f'{datetime.now().hour} : {datetime.now().minute}') + Fore.WHITE)
     print(Fore.WHITE + datetime.now().strftime("%d/%m/%Y") + "\t" + Fore.CYAN + datetime.today().strftime('%A') + Fore.WHITE)
@@ -262,6 +268,87 @@ def covid():
     print(Fore.RED + "Deaths: " + str(data['deaths']) + Fore.BLUE + "\t Confirmed: " + str(data['confirmed']))
 
 
+def timer():
+    import time
+    t = int(input())
+    while t:
+        mins, secs = divmod(t, 60)
+        timer = '{:02d}:{:02d}'.format(mins,secs)
+        print(timer, end="\r")
+        time.sleep(1)
+        t -= 1
+    print('Timer completed!')
+
+
+def base_converter():
+    pass
+
+
+def images_to_pdf():
+    import img2pdf
+    import os, sys
+
+    os.chdir(sys.path[0])
+    files = os.listdir()
+    files_name = []
+
+    with open('r.pdf', 'ab') as f:
+        for i in files:
+            if i.endswith(".jpg"):
+                files_name.append(i)
+        
+        f.write(img2pdf.convert(files_name))
+
+
+def keylogger():
+    pass
+
+
+def system_info():
+    import platform
+
+    f = Figlet(font='standard')
+    print(Fore.CYAN  + f.renderText('System info') + Fore.WHITE)
+
+    my_system = platform.uname()
+    print(f"{Fore.CYAN}System: {Fore.WHITE}{my_system.system}")
+    print(f"{Fore.CYAN}Node Name: {Fore.WHITE}{my_system.node}")
+    print(f"{Fore.CYAN}Release: {Fore.WHITE}{my_system.release}")
+    print(f"{Fore.CYAN}Version: {Fore.WHITE}{my_system.version}")
+    print(f"{Fore.CYAN}Machine: {Fore.WHITE}{my_system.machine}")
+    print(f"{Fore.CYAN}Processor: {Fore.WHITE}{my_system.processor}")
+
+
+def random_number():
+    pass
+
+
+def internet_connection():
+    pass
+
+
+def image_to_ascii():
+    pass
+
+
+def convert_to_zip():
+    pass
+
+
+def todo():
+    pass
+
+
+def password():
+    pass
+
+
+def hangman():
+    pass
+
+
+def tic_tac_toe():
+    pass
 
 
 start()
@@ -271,56 +358,46 @@ while True:
     if selected == 0:
         sys.exit()
     elif selected == 1:
-        weather()
+        clock()
     elif selected == 2:
-        show_calendar()
+        calendar()
     elif selected == 3:
-        coins()
+        alarm()
     elif selected == 4:
-        screen_shot()
+        weather()
     elif selected == 5:
-        record()
+        coins()
     elif selected == 6:
-        send_whatsapp_message()
+        covid()
     elif selected == 7:
-        mail()
+        base_converter()
     elif selected == 8:
         calculator()
     elif selected == 9:
-        ip()
+        random_number()
     elif selected == 10:
-        alarm()
+        images_to_pdf()
     elif selected == 11:
-        clock()
+        image_to_ascii()
     elif selected == 12:
-        covid()
+        convert_to_zip()
     elif selected == 13:
-        pass
+        ip()
     elif selected == 14:
-        pass
+        system_info()
     elif selected == 15:
-        pass
+        internet_connection()
     elif selected == 16:
-        pass
+        keylogger()
     elif selected == 17:
-        pass
+        todo()
     elif selected == 18:
-        pass
+        password()
     elif selected == 19:
-        pass
+        mail()
     elif selected == 20:
-        pass
+        send_whatsapp_message()
     elif selected == 21:
-        pass
+        hangman()
     elif selected == 22:
-        pass
-    elif selected == 23:
-        pass
-    elif selected == 24:
-        pass
-    elif selected == 25:
-        pass
-    elif selected == 26:
-        pass
-    elif selected == 27:
-        pass
+        tic_tac_toe()
