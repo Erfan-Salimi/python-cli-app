@@ -222,3 +222,19 @@ console.warn: SearchSettings: "get: No settings file exists, new profile?" (new 
 DevTools listening on ws://localhost:58986/devtools/browser/6a70c77e-9f6d-4888-8fd8-5a314a235ff6
 1660811492469	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
 1660811499821	Marionette	INFO	Stopped listening on port 58995
+1661410640649	geckodriver	INFO	Listening on 127.0.0.1:57507
+1661410643766	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "57508" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "C:\\Users\\Salimi\\AppData\\Local\\Temp\\rust_mozprofileM5kYMT"
+1661410644155	Marionette	INFO	Marionette enabled
+1661410644159	Marionette	INFO	Listening on port 57517
+WebDriver BiDi listening on ws://localhost:57508
+Read port: 57517
+1661410644280	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\Salimi\\AppData\\Local\\Temp\\rust_mozprofileM5kYMT\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:57508/devtools/browser/c49735b0-8317-4aad-9a4c-d27b5043523d
+1661410648643	Marionette	WARN	Ignoring event 'DOMContentLoaded' because document has an invalid readyState of 'complete'.
+1661410651472	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.js:237:24
+TimedPromise@chrome://remote/content/marionette/sync.js:222:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.js:431:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.js:179:31
+1661410656512	Marionette	INFO	Stopped listening on port 57517

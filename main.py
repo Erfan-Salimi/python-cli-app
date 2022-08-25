@@ -1,13 +1,11 @@
-from calendar import calendar
-from code import interact
-from lib2to3.pytree import convert
 import os, sys
-from random import random
 from time import sleep
 from pyfiglet import Figlet
 from colorama import Fore, init
+import tkinter as tk
 
 
+tk.Tk().withdraw()
 os.chdir(sys.path[0]) 
 os.system("cls")
 init()
@@ -75,7 +73,7 @@ def start():
     print("%-33s %-33s %-33s" % (f'{Fore.GREEN}7. {Fore.WHITE}Base converter', f'{Fore.GREEN}8. {Fore.WHITE}Calculator', f'{Fore.GREEN}9. {Fore.WHITE}Random number'))
     print("%-33s %-33s %-33s" % (f'{Fore.GREEN}10. {Fore.WHITE}Images to pdf', f'{Fore.GREEN}11. {Fore.WHITE}Image to ascii', f'{Fore.GREEN}12. {Fore.WHITE}Convert to zip'))
     print("%-33s %-33s %-33s" % (f'{Fore.GREEN}13. {Fore.WHITE}Ip address', f'{Fore.GREEN}14. {Fore.WHITE}System info', f'{Fore.GREEN}15. {Fore.WHITE}Internet connection'))
-    print("%-33s %-33s %-33s" % (f'{Fore.GREEN}16. {Fore.WHITE}Notepad', f'{Fore.GREEN}17. {Fore.WHITE}TODO', f'{Fore.GREEN}18. {Fore.WHITE}Password generator'))
+    print("%-33s %-33s %-33s" % (f'{Fore.GREEN}16. {Fore.WHITE}Keylogger', f'{Fore.GREEN}17. {Fore.WHITE}TODO', f'{Fore.GREEN}18. {Fore.WHITE}Password generator'))
     print("%-33s %-33s" % (f'{Fore.GREEN}19. {Fore.WHITE}Email', f'{Fore.GREEN}20. {Fore.WHITE}Whatsapp message'))
     print("%-33s %-33s" % (f'{Fore.GREEN}21. {Fore.WHITE}Hangman', f'{Fore.GREEN}22. {Fore.WHITE}Tic Tac Toe'))
     print()
@@ -265,7 +263,7 @@ def covid():
     covid = Covid()
     country = input(Fore.WHITE + 'Enter your country: ')
     data = covid.get_status_by_country_name(country)
-    print(Fore.RED + "Deaths: " + str(data['deaths']) + Fore.BLUE + "\t Confirmed: " + str(data['confirmed']))
+    print(Fore.RED + "Deaths: " + str(data['deaths']) + Fore.CYAN + "\t Confirmed: " + str(data['confirmed']))
 
 
 def timer():
@@ -281,23 +279,34 @@ def timer():
 
 
 def base_converter():
-    pass
+    f = Figlet(font='standard')
+    print(Fore.CYAN  + f.renderText('Base converter') + Fore.WHITE)
+
+    a, b, b2 = input(Fore.WHITE + "Enter the number, the base of the number and the base of the destination with a space: ").split()
+    b, b2 = int(b), int(b2)
+    n = int(a, b)
+
+    a = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F']
+    result = ''
+    while n:
+        result += a[n % b2]
+        n //= b2
+    result = result[::-1]
+    print(Fore.WHITE + "Result: " + Fore.CYAN + str(result))
 
 
 def images_to_pdf():
+    from tkinter.filedialog import askopenfilenames
     import img2pdf
-    import os, sys
 
-    os.chdir(sys.path[0])
-    files = os.listdir()
-    files_name = []
+    f = Figlet(font='standard')
+    print(Fore.CYAN  + f.renderText('PDF converter') + Fore.WHITE)
 
-    with open('r.pdf', 'ab') as f:
-        for i in files:
-            if i.endswith(".jpg"):
-                files_name.append(i)
-        
-        f.write(img2pdf.convert(files_name))
+    files = askopenfilenames(filetypes=[("Text Files", "*.jpg *.png"), ("All Files", "*.*")])
+    result_name = input("Enter result file path and file name(e,.g C:/result.pdf): ")
+
+    with open(f"{result_name}", 'ab') as f:
+        f.write(img2pdf.convert(files))
 
 
 def keylogger():
@@ -320,7 +329,14 @@ def system_info():
 
 
 def random_number():
-    pass
+    import random
+
+    f = Figlet(font='standard')
+    print(Fore.CYAN  + f.renderText('Random') + Fore.WHITE)
+
+    a, b = map(int, input("Enter a range of numbers(e.g 1 100): ").split())
+    print(Fore.WHITE + "Random number: " + Fore.CYAN + str(random.randint(a, b)))
+
 
 
 def internet_connection():
@@ -356,11 +372,11 @@ while True:
     selected = choose()
 
     if selected == 0:
-        sys.exit()
+        break
     elif selected == 1:
         clock()
     elif selected == 2:
-        calendar()
+        show_calendar()
     elif selected == 3:
         alarm()
     elif selected == 4:
@@ -401,3 +417,6 @@ while True:
         hangman()
     elif selected == 22:
         tic_tac_toe()
+
+print(Fore.RED + "Good bye :)")
+sys.exit()
