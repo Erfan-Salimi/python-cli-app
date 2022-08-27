@@ -1,8 +1,5 @@
-from ast import For
-from cgitb import reset
 import os, sys
 from time import sleep
-from xml.dom.pulldom import CHARACTERS
 from pyfiglet import Figlet
 from colorama import Fore, init
 import tkinter as tk
@@ -492,9 +489,9 @@ def password():
     for i in range(n):
         result += choice(list(characters))
     print("Result: " + Fore.WHITE + result)
+    
 
-
-def hangman():
+class Hangman():
     pass
 
 
@@ -545,7 +542,7 @@ while True:
     elif selected == 20:
         send_whatsapp_message()
     elif selected == 21:
-        hangman()
+        hangman = Hangman()
 
 
 print(Fore.RED + "Good bye :)")
