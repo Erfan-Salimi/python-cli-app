@@ -1,3 +1,4 @@
+from ast import For
 from cgitb import reset
 import os, sys
 from time import sleep
@@ -73,8 +74,8 @@ def start():
     print("%-33s %-33s %-33s" % (f'{Fore.GREEN}4. {Fore.WHITE}Weather', f'{Fore.GREEN}5. {Fore.WHITE}Coins', f'{Fore.GREEN}6. {Fore.WHITE}Corona statistics'))
     print("%-33s %-33s %-33s" % (f'{Fore.GREEN}7. {Fore.WHITE}Base converter', f'{Fore.GREEN}8. {Fore.WHITE}Calculator', f'{Fore.GREEN}9. {Fore.WHITE}Random number'))
     print("%-33s %-33s %-33s" % (f'{Fore.GREEN}10. {Fore.WHITE}Images to pdf', f'{Fore.GREEN}11. {Fore.WHITE}Image to ascii', f'{Fore.GREEN}12. {Fore.WHITE}Convert to zip'))
-    print("%-33s %-33s %-33s" % (f'{Fore.GREEN}13. {Fore.WHITE}Ip address', f'{Fore.GREEN}14. {Fore.WHITE}System info', f'{Fore.GREEN}15. {Fore.WHITE}Internet connection'))
-    print("%-33s %-33s %-33s" % (f'{Fore.GREEN}16. {Fore.WHITE}Keylogger', f'{Fore.GREEN}17. {Fore.WHITE}TODO', f'{Fore.GREEN}18. {Fore.WHITE}Password generator'))
+    print("%-33s %-33s %-33s" % (f'{Fore.GREEN}13. {Fore.WHITE}Ip address', f'{Fore.GREEN}14. {Fore.WHITE}System info', f'{Fore.GREEN}15. {Fore.WHITE}Keylogger'))
+    print("%-33s %-33s %-33s" % (f'{Fore.GREEN}16. {Fore.WHITE}Internet connection', f'{Fore.GREEN}17. {Fore.WHITE}TODO', f'{Fore.GREEN}18. {Fore.WHITE}Password generator'))
     print("%-33s %-33s" % (f'{Fore.GREEN}19. {Fore.WHITE}Email', f'{Fore.GREEN}20. {Fore.WHITE}Whatsapp message'))
     print("%-33s %-33s" % (f'{Fore.GREEN}21. {Fore.WHITE}Hangman', f'{Fore.GREEN}22. {Fore.WHITE}Tic Tac Toe'))
     print()
@@ -310,10 +311,6 @@ def images_to_pdf():
         f.write(img2pdf.convert(files))
 
 
-def keylogger():
-    pass
-
-
 def system_info():
     import platform
 
@@ -405,9 +402,80 @@ def convert_to_zip():
     z.close()
 
 
+def keylogger():
+    import keyboard
+
+    f = Figlet(font='standard')
+    print(Fore.CYAN  + f.renderText('Keylogger') + Fore.WHITE)
+
+    print("You can stop keylogger with press 'esc'")
+    r = keyboard.record(until="esc")
+    keyboard.play(r, speed_factor=2)
+
 
 def todo():
-    pass
+    from terminaltables import AsciiTable
+
+    f = Figlet(font='standard')
+    print(Fore.CYAN  + f.renderText('TODO') + Fore.WHITE)
+
+    data = open("TODO.txt", "r+", encoding='utf8')
+    ls = data.readlines()
+
+    table_data = [
+        ["TODO", "Done"]
+    ]
+    table_data2 = [
+        ["TODO", "Done"]
+    ]
+
+    print(f"{Fore.CYAN}Add{Fore.WHITE}")
+    print(f"{Fore.CYAN}Delete{Fore.WHITE}")
+    print(f"{Fore.CYAN}Done{Fore.WHITE}")
+    print(f"{Fore.CYAN}show{Fore.WHITE}")
+    print(f"{Fore.CYAN}exit{Fore.WHITE}")
+
+    for i in ls:
+        item, ok = i.split(" | ")
+        if "✓" in ok:
+            ok = "✓" + "\n"
+            ok2 = Fore.GREEN + "✓" + Fore.WHITE + "\n"
+        elif "✘" in ok:
+            ok = "✘" + "\n"
+            ok2 = Fore.RED + "✘" + Fore.WHITE + "\n"
+
+        table_data.append([item, ok])
+        table_data2.append([item, ok2])
+
+    table = AsciiTable(table_data2)
+    print("\n" + table.table + "\n")
+
+    l = True
+    while l:
+        a = input(Fore.WHITE + "\nEnter code: " + Fore.CYAN).split()
+        print(Fore.WHITE, end="")
+
+        if a[0].lower() == "add":
+            text = input(Fore.WHITE + "Enter your TODO: " + Fore.CYAN)
+            table_data.append([text, f"✘\n"])
+            table_data2.append([text, f"{Fore.RED}✘{Fore.WHITE}\n"])
+        elif a[0].lower() == "delete":
+            n = int(input(Fore.WHITE + "Enter the TODO number you want to delete: " + Fore.CYAN))
+            del table_data[n]
+            del table_data2[n]
+        elif a[0].lower() == "done":
+            n = int(input(Fore.WHITE + "Enter the number of the todo you did: " + Fore.CYAN))
+            table_data[n][1] = "✓"
+            table_data2[n][1] = f"{Fore.GREEN}✓{Fore.WHITE}"
+        elif a[0].lower() == "show":
+                table = AsciiTable(table_data2)
+                print(f"{Fore.WHITE}\n" + table.table + "\n")
+        elif a[0].lower() == "exit":
+            l = False
+
+    r = '\n'.join([f"{item} | {ok}"  for item, ok in table_data[1:]])
+    data.write(r)
+    data.close()
 
 
 def password():
@@ -457,9 +525,9 @@ while True:
     elif selected == 14:
         system_info()
     elif selected == 15:
-        internet_connection()
-    elif selected == 16:
         keylogger()
+    elif selected == 16:
+        internet_connection()
     elif selected == 17:
         todo()
     elif selected == 18:
@@ -473,5 +541,5 @@ while True:
     elif selected == 22:
         tic_tac_toe()
 
+
 print(Fore.RED + "Good bye :)")
-sys.exit()
