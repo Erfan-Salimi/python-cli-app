@@ -2,6 +2,7 @@ from ast import For
 from cgitb import reset
 import os, sys
 from time import sleep
+from xml.dom.pulldom import CHARACTERS
 from pyfiglet import Figlet
 from colorama import Fore, init
 import tkinter as tk
@@ -76,8 +77,7 @@ def start():
     print("%-33s %-33s %-33s" % (f'{Fore.GREEN}10. {Fore.WHITE}Images to pdf', f'{Fore.GREEN}11. {Fore.WHITE}Image to ascii', f'{Fore.GREEN}12. {Fore.WHITE}Convert to zip'))
     print("%-33s %-33s %-33s" % (f'{Fore.GREEN}13. {Fore.WHITE}Ip address', f'{Fore.GREEN}14. {Fore.WHITE}System info', f'{Fore.GREEN}15. {Fore.WHITE}Keylogger'))
     print("%-33s %-33s %-33s" % (f'{Fore.GREEN}16. {Fore.WHITE}Internet connection', f'{Fore.GREEN}17. {Fore.WHITE}TODO', f'{Fore.GREEN}18. {Fore.WHITE}Password generator'))
-    print("%-33s %-33s" % (f'{Fore.GREEN}19. {Fore.WHITE}Email', f'{Fore.GREEN}20. {Fore.WHITE}Whatsapp message'))
-    print("%-33s %-33s" % (f'{Fore.GREEN}21. {Fore.WHITE}Hangman', f'{Fore.GREEN}22. {Fore.WHITE}Tic Tac Toe'))
+    print("%-33s %-33s %-33s" % (f'{Fore.GREEN}19. {Fore.WHITE}Email', f'{Fore.GREEN}20. {Fore.WHITE}Whatsapp message', f'{Fore.GREEN}21. {Fore.WHITE}Hangman'))
     print()
 
 
@@ -479,14 +479,21 @@ def todo():
 
 
 def password():
-    pass
+    from random import choice
+
+    f = Figlet(font='standard')
+    print(Fore.CYAN  + f.renderText('Password generator') + Fore.WHITE)
+
+    characters = "4!@597#6$%^8&*1(0)32_+"
+
+    result = ""
+    n = int(input(Fore.WHITE + "Enter the number of characters: " + Fore.CYAN))
+    for i in range(n):
+        result += choice(list(characters))
+    print("Result: " + Fore.WHITE + result)
 
 
 def hangman():
-    pass
-
-
-def tic_tac_toe():
     pass
 
 
@@ -538,8 +545,6 @@ while True:
         send_whatsapp_message()
     elif selected == 21:
         hangman()
-    elif selected == 22:
-        tic_tac_toe()
 
 
 print(Fore.RED + "Good bye :)")
