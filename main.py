@@ -437,6 +437,7 @@ def todo():
 
     for i in ls:
         item, ok = i.split(" | ")
+
         if "✓" in ok:
             ok = "✓" + "\n"
             ok2 = Fore.GREEN + "✓" + Fore.WHITE + "\n"
