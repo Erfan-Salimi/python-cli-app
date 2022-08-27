@@ -485,8 +485,8 @@ def password():
     print(Fore.CYAN  + f.renderText('Password generator') + Fore.WHITE)
 
     characters = "4!@597#6$%^8&*1(0)32_+"
-
     result = ""
+    
     n = int(input(Fore.WHITE + "Enter the number of characters: " + Fore.CYAN))
     for i in range(n):
         result += choice(list(characters))
