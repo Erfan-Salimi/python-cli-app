@@ -341,7 +341,16 @@ def random_number():
 
 
 def internet_connection():
-    pass
+    import speedtest
+
+    f = Figlet(font='standard')
+    print(Fore.CYAN  + f.renderText('Speed Test') + Fore.WHITE)
+
+    test = speedtest.Speedtest()
+    download = test.download()
+    upload = test.upload()
+    print(f"{Fore.CYAN}Download speed: {Fore.WHITE}{download}")
+    print(f"{Fore.CYAN}Upload speed: {Fore.WHITE}{upload}")
 
 
 def image_to_ascii():
