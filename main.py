@@ -1,4 +1,3 @@
-from ctypes.wintypes import WORD
 import os, sys
 from time import sleep
 from pyfiglet import Figlet
@@ -62,7 +61,6 @@ class Weather():
         caption = self.browser.find_element(by=By.CSS_SELECTOR, value=".aqi-status__text").text
         return q, caption
 
-
     def end(self):
         self.browser.close()
 
@@ -78,6 +76,7 @@ def start():
     print("%-33s %-33s %-33s" % (f'{Fore.GREEN}13. {Fore.WHITE}Ip address', f'{Fore.GREEN}14. {Fore.WHITE}System info', f'{Fore.GREEN}15. {Fore.WHITE}Keylogger'))
     print("%-33s %-33s %-33s" % (f'{Fore.GREEN}16. {Fore.WHITE}Internet connection', f'{Fore.GREEN}17. {Fore.WHITE}TODO', f'{Fore.GREEN}18. {Fore.WHITE}Password generator'))
     print("%-33s %-33s %-33s" % (f'{Fore.GREEN}19. {Fore.WHITE}Email', f'{Fore.GREEN}20. {Fore.WHITE}Whatsapp message', f'{Fore.GREEN}21. {Fore.WHITE}Hangman'))
+    print("%-33s %-33s" % (f'{Fore.GREEN}22. {Fore.WHITE}ScreenShot', f'{Fore.GREEN}23. {Fore.WHITE}Screen recorder'))
     print()
 
 
@@ -227,7 +226,6 @@ def calculator():
     print(Fore.CYAN + "Answer: " + Fore.WHITE + str(eval(a)))
 
 
-
 def ip():
     import socket
 
@@ -276,6 +274,7 @@ def covid():
 
 def timer():
     import time
+
     t = int(input())
     while t:
         mins, secs = divmod(t, 60)
@@ -296,6 +295,7 @@ def base_converter():
 
     a = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F']
     result = ''
+    
     while n:
         result += a[n % b2]
         n //= b2
@@ -658,6 +658,9 @@ while True:
         life = True
         while life:
             life = hangman.guess()
-
+    elif selected == 22:
+        screen_shot()
+    elif selected == 23:
+        record()
 
 print(Fore.RED + "Good bye :)")
