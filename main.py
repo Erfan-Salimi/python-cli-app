@@ -1,3 +1,4 @@
+from ctypes.wintypes import WORD
 import os, sys
 from time import sleep
 from pyfiglet import Figlet
@@ -492,7 +493,109 @@ def password():
     
 
 class Hangman():
-    pass
+    def __init__(self) -> None:
+        f = Figlet(font='standard')
+        print(Fore.CYAN  + f.renderText('Hangman') + Fore.WHITE)
+
+        self.animals = ['chicken', 'dog', 'cat', 'mouse', 'frog', 'horse']
+        self.numbers = ['one', 'two', 'tree', 'four', 'five', 'six', 'seven', 'eight', 'nine']
+        self.colors = ['red', 'blue', 'white', 'black', 'green', 'yellow', 'orange', 'cyan']
+
+        self.word = []
+        self.correct_word = ''
+        self.l = 0
+
+
+    def select_word(self):
+        import random
+
+        group = input("Enter the group of words(numbers, colors, animals): " + Fore.CYAN)
+        print(Fore.WHITE, end="")
+        if 'animals' in group.lower():
+            self.correct_word = random.choice(self.animals)
+        elif 'numbers' in group.lower():
+            self.correct_word = random.choice(self.numbers)
+        else:
+            self.correct_word = random.choice(self.colors)
+        
+        self.word = ['-'] * len(self.correct_word)
+
+
+    def hangman_drawer(self):
+        print(Fore.WHITE + "life: ", 5 - self.l)
+        if self.l == 1:
+            print(Fore.RED + "   _____ \n"
+                "  |      \n"
+                "  |      \n"
+                "  |      \n"
+                "  |      \n"
+                "  |      \n"
+                "  |      \n"
+                "__|__\n")
+        elif self.l == 2:
+            print(Fore.RED + "   _____ \n"
+                "  |     | \n"
+                "  |     |\n"
+                "  |     | \n"
+                "  |     O \n"
+                "  |      \n"
+                "  |      \n"
+                "__|__\n")
+        elif self.l == 3:
+            print(Fore.RED + "   _____ \n"
+                "  |     | \n"
+                "  |     |\n"
+                "  |     | \n"
+                "  |     O \n"
+                "  |    / \ \n"
+                "  |      \n"
+                "__|__\n")
+        elif self.l == 4:
+            print(Fore.RED + "   _____ \n"
+                "  |     | \n"
+                "  |     |\n"
+                "  |     | \n"
+                "  |     O \n"
+                "  |    /|\ \n"
+                "  |      \n"
+                "__|__\n")
+        elif self.l == 5:
+            print(Fore.WHITE + "life: ", 5 - self.l)
+            print(Fore.RED + "   _____ \n"
+                "  |     | \n"
+                "  |     |\n"
+                "  |     | \n"
+                "  |     O \n"
+                "  |    /|\ \n"
+                "  |    / \ \n"
+                "__|__\n")
+            print(Fore.RED + "You lose!")
+            print(f'{Fore.WHITE}The word was: {Fore.CYAN}{self.correct_word}')
+            return False
+        return True
+
+
+    def guess(self):
+        w = ' '.join(self.word)
+        print(f'\n{Fore.CYAN}{w}')
+        letter = input(Fore.WHITE + "Guess a letter: " + Fore.CYAN).lower()
+
+        if letter in self.correct_word:
+            j = 0
+            for i in self.correct_word:
+                if i == letter:
+                    self.word[j] = letter.capitalize()
+                j += 1
+            print(Fore.GREEN + f"Yes! {letter.capitalize()} is in the word :)\n")
+        else:
+            print(Fore.RED + f"No! {letter.capitalize()} is not in the word :(\n")
+            self.l += 1
+            return self.hangman_drawer()
+
+        if ''.join(self.word).lower() == self.correct_word:
+            print(f"\n{Fore.GREEN}You have won!{Fore.WHITE}")
+            return False
+        return True
 
 
 start()
@@ -543,6 +646,10 @@ while True:
         send_whatsapp_message()
     elif selected == 21:
         hangman = Hangman()
+        hangman.select_word()
+        life = True
+        while life:
+            life = hangman.guess()
 
 
 print(Fore.RED + "Good bye :)")
