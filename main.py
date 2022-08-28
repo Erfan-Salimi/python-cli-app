@@ -18,6 +18,8 @@ class Weather():
         from selenium import webdriver
 
         options = Options()
+        options.add_argument('--headless')
+        options.add_argument('--disable-gpu')
         options.page_load_strategy = 'none'
         self.browser = webdriver.Firefox(options=options)
         self.browser.maximize_window()
@@ -52,9 +54,9 @@ class Weather():
     def air_quality(self, city):
         from selenium.webdriver.common.by import By
 
-        self.browser.get("https://www.google.com/search?q=google+air+quality+" + city)
+        self.browser.get("https://www.google.com/search?q=air+quality+" + city + "+site:https://www.iqair.com")
         sleep(2)
-        self.browser.find_element(by=By.CSS_SELECTOR, value="div.g:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > a:nth-child(1) > h3:nth-child(2)").click()
+        self.browser.find_element(by=By.CSS_SELECTOR, value="#rso > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > a:nth-child(1) > h3:nth-child(2)").click()
         sleep(5)
         q = self.browser.find_element(by=By.CSS_SELECTOR, value=".aqi-value__value").text
         caption = self.browser.find_element(by=By.CSS_SELECTOR, value=".aqi-status__text").text
@@ -96,7 +98,7 @@ def screen_shot():
 
     f = Figlet(font='standard')
     print(Fore.CYAN  + f.renderText('Screenshot'))
-    path = input(Fore.WHITE + "Enter the image path and file name: ")
+    path = input(Fore.WHITE + "Enter the image path and file name: " + Fore.CYAN)
     screen = screenshot(path)
     return screen
 
@@ -104,7 +106,8 @@ def screen_shot():
 def weather():
     f = Figlet(font='standard')
     print(Fore.CYAN  + f.renderText('Weather'))
-    city = input(Fore.WHITE + "Enter the name of the city: ")
+
+    city = input(Fore.WHITE + "Enter the name of the city: " + Fore.CYAN)
 
     bot = Weather()
     city_name, temperature_C, temperature_F, caption, precipitation, humidity, wind, air_quality, air_quality_caption, last_update = bot.get_weather(city)
@@ -127,6 +130,7 @@ def show_calendar():
 
     f = Figlet(font='standard')
     print(Fore.CYAN  + f.renderText('Calendar') + Fore.WHITE)
+
     month = datetime.now().month
     year = datetime.now().year
     print(calendar.month(year, month))
@@ -137,7 +141,8 @@ def coins():
 
     f = Figlet(font='standard')
     print(Fore.CYAN  + f.renderText('Coins') + Fore.WHITE)
-    coin = input("Enter your coin name: ")
+
+    coin = input(Fore.WHITE + "Enter your coin name: " + Fore.CYAN).lower()
     url = f"https://api.coincap.io/v2/assets/{coin}"
     data = requests.get(url).json()["data"]
     print(Fore.CYAN + "Name: " + Fore.WHITE + data['id'])
@@ -153,7 +158,8 @@ def record():
 
     f = Figlet(font='standard')
     print(Fore.CYAN  + f.renderText('Reccord screen') + Fore.WHITE)
-    path = input("Enter the path: ")
+
+    path = input("Enter the path: " + Fore.CYAN)
     print(Fore.CYAN + "Recording started. stop with Enter")
     count = 0
     img_array = []
@@ -184,8 +190,9 @@ def send_whatsapp_message():
 
     f = Figlet(font='standard')
     print(Fore.CYAN  + f.renderText('Whatsapp message') + Fore.WHITE)
-    h, m = [int(i) for i in input("Enter the time to send the message(e.g 22:04): ").split(":")]
-    phone_number = input("Enter the recipient's phone number(e.g +98xxxxxxxxx): ")
+
+    h, m = [int(i) for i in input("Enter the time to send the message(e.g 22:04): " + Fore.CYAN).split(":")]
+    phone_number = input(Fore.WHITE + "Enter the recipient's phone number(e.g +98xxxxxxxxx): " + Fore.CYAN)
     message = input("Enter the message: ")
     pywhatkit.sendwhatmsg(phone_number, message, h, m)
     print(Fore.GREEN + "Message sent successfully")
@@ -201,11 +208,11 @@ def mail():
 
     msg = EmailMessage()
 
-    msg['From'] = input("Enter your email address: ")
-    msg['To'] = input("Enter the recipient's email address: ")
-    password = getpass.getpass('Enter your email password: ')
-    msg['Subject'] = input('Enter your email subject: ')
-    msg.set_content(input("Enter your message: "))
+    msg['From'] = input(Fore.WHITE + "Enter your email address: " + Fore.CYAN)
+    msg['To'] = input(Fore.WHITE + "Enter the recipient's email address: " + Fore.CYAN)
+    password = getpass.getpass(Fore.WHITE + 'Enter your email password: ' + Fore.CYAN)
+    msg['Subject'] = input(Fore.WHITE + 'Enter your email subject: ' + Fore.CYAN)
+    msg.set_content(input(Fore.WHITE + "Enter your message: " + Fore.CYAN))
 
     with smtplib.SMTP_SSL("smtp.gmail.com", 587) as smtp:
         smtp.login(msg['From'], password)
@@ -215,7 +222,8 @@ def mail():
 def calculator():
     f = Figlet(font='standard')
     print(Fore.CYAN  + f.renderText('Calc') + Fore.WHITE)
-    a = input("Enter the math expression: ")
+
+    a = input(Fore.WHITE + "Enter the math expression: " + Fore.CYAN)
     print(Fore.CYAN + "Answer: " + Fore.WHITE + str(eval(a)))
 
 
@@ -236,7 +244,7 @@ def alarm():
     f = Figlet(font='standard')
     print(Fore.CYAN  + f.renderText('Alarm') + Fore.WHITE)
 
-    h, m = [int(i) for i in input("Enter the alarm time: ").split(":")]
+    h, m = [int(i) for i in input(Fore.WHITE + "Enter the alarm time: " + Fore.CYAN).split(":")]
     while True:
         now_m = datetime.now().minute
         now_h = datetime.now().hour
@@ -261,7 +269,7 @@ def covid():
     print(Fore.CYAN  + f.renderText('Covid 19') + Fore.WHITE)
 
     covid = Covid()
-    country = input(Fore.WHITE + 'Enter your country: ')
+    country = input(Fore.WHITE + 'Enter your country: ' + Fore.CYAN)
     data = covid.get_status_by_country_name(country)
     print(Fore.RED + "Deaths: " + str(data['deaths']) + Fore.CYAN + "\t Confirmed: " + str(data['confirmed']))
 
@@ -275,14 +283,14 @@ def timer():
         print(timer, end="\r")
         time.sleep(1)
         t -= 1
-    print('Timer completed!')
+    print( Fore.CYAN + 'Timer completed!')
 
 
 def base_converter():
     f = Figlet(font='standard')
     print(Fore.CYAN  + f.renderText('Base converter') + Fore.WHITE)
 
-    a, b, b2 = input(Fore.WHITE + "Enter the number, the base of the number and the base of the destination with a space: ").split()
+    a, b, b2 = input(Fore.WHITE + "Enter the number, the base of the number and the base of the destination with a space: " + Fore.CYAN).split()
     b, b2 = int(b), int(b2)
     n = int(a, b)
 
@@ -303,7 +311,7 @@ def images_to_pdf():
     print(Fore.CYAN  + f.renderText('PDF converter') + Fore.WHITE)
 
     files = askopenfilenames(filetypes=[("Text Files", "*.jpg *.png"), ("All Files", "*.*")])
-    result_name = input("Enter result file path and file name(e,.g C:/result.pdf): ")
+    result_name = input(Fore.WHITE + "Enter result file path and file name(e,.g C:/result.pdf): " + Fore.CYAN)
 
     with open(f"{result_name}", 'ab') as f:
         f.write(img2pdf.convert(files))
@@ -330,7 +338,7 @@ def random_number():
     f = Figlet(font='standard')
     print(Fore.CYAN  + f.renderText('Random') + Fore.WHITE)
 
-    a, b = map(int, input("Enter a range of numbers(e.g 1 100): ").split())
+    a, b = map(int, input(Fore.WHITE + "Enter a range of numbers(e.g 1 100): " + Fore.CYAN).split())
     print(Fore.WHITE + "Random number: " + Fore.CYAN + str(random.randint(a, b)))
 
 
