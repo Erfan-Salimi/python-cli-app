@@ -45,15 +45,15 @@ class Weather():
         humidity = self.browser.find_element(by=By.CSS_SELECTOR, value="#wob_hm").text
         wind = self.browser.find_element(by=By.CSS_SELECTOR, value="#wob_ws").text
         caption = self.browser.find_element(by=By.CSS_SELECTOR, value="#wob_dc").text
-        air_quality, air_quality_caption = self.air_quality(city)
+        # air_quality, air_quality_caption = self.air_quality(city)
 
-        return [city_name, temperature_C, temperature_F, caption, precipitation, humidity, wind, air_quality, air_quality_caption, last_update]
+        return [city_name, temperature_C, temperature_F, caption, precipitation, humidity, wind, last_update]
 
 
     def air_quality(self, city):
         from selenium.webdriver.common.by import By
 
-        self.browser.get("https://www.google.com/search?q=air+quality+" + city + "+site:https://www.iqair.com")
+        self.browser.get("https://www.google.com/search?q=air+quality+" + city + "+site:iqair.com")
         sleep(2)
         self.browser.find_element(by=By.CSS_SELECTOR, value="#rso > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > a:nth-child(1) > h3:nth-child(2)").click()
         sleep(5)
@@ -109,18 +109,18 @@ def weather():
     city = input(Fore.WHITE + "Enter the name of the city: " + Fore.CYAN)
 
     bot = Weather()
-    city_name, temperature_C, temperature_F, caption, precipitation, humidity, wind, air_quality, air_quality_caption, last_update = bot.get_weather(city)
+    city_name, temperature_C, temperature_F, caption, precipitation, humidity, wind, last_update = bot.get_weather(city)
     bot.end()
 
     # print(Fore.GREEN + city_name)
-    print(Fore.MAGENTA + temperature_C + " C\t" + temperature_F + " F")
+    print(Fore.CYAN + temperature_C + " C\t" + temperature_F + " F")
     print(Fore.WHITE + caption + "\n")
 
     print(Fore.CYAN + "Precipitation: " + Fore.WHITE + precipitation)
     print(Fore.CYAN + "Humidity: " + Fore.WHITE + humidity)
     print(Fore.CYAN + "Wind: " + Fore.WHITE + wind + "\n")
 
-    print(Fore.MAGENTA + "Air quality: " + Fore.WHITE + air_quality + " - " + air_quality_caption + "\n")
+    # print(Fore.MAGENTA + "Air quality: " + Fore.WHITE + air_quality + " - " + air_quality_caption + "\n")
 
 
 def show_calendar():
@@ -171,7 +171,8 @@ def record():
 
         img = screenshot()
         img = np.array(img) [:, :, ::-1]
-        height, width, layers = img.shape
+        
+        height, width = img.shape[:2]
         size = (width, height)
         img_array.append(img)
     else:
@@ -442,17 +443,19 @@ def todo():
     print(f"{Fore.CYAN}exit{Fore.WHITE}")
 
     for i in ls:
-        item, ok = i.split(" | ")
+        try:
+            item, ok = i.split(" | ")
 
-        if "✓" in ok:
-            ok = "✓" + "\n"
-            ok2 = Fore.GREEN + "✓" + Fore.WHITE + "\n"
-        elif "✘" in ok:
-            ok = "✘" + "\n"
-            ok2 = Fore.RED + "✘" + Fore.WHITE + "\n"
+            if "✓" in ok:
+                ok = "✓" + "\n"
+                ok2 = Fore.GREEN + "✓" + Fore.WHITE + "\n"
+            else:
+                ok = "✘" + "\n"
+                ok2 = Fore.RED + "✘" + Fore.WHITE + "\n"
 
-        table_data.append([item, ok])
-        table_data2.append([item, ok2])
+            table_data.append([item, ok])
+            table_data2.append([item, ok2])
+        except: pass
 
     table = AsciiTable(table_data2)
     print("\n" + table.table + "\n")
