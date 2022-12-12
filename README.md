@@ -15,4 +15,6 @@ pip install -r requirements.txt
 ```
 
 <br>
+<p align="center">
 <img src="https://github.com/Erfan-Salimi/python-cli-app/blob/master/images/cli-python.png" alt="Python CLI app" style="text-align: center">
+<p>
