@@ -1,10 +1,14 @@
 # python-cli-app
 🔴 python cli application
 
+<br>
+
 ## Get project
 ```bash
   git clone https://github.com/Erfan-Salimi/python-cli-app.git
 ```
+
+<br>
 
 ### Install packages
 
